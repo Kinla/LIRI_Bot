@@ -1,0 +1,23 @@
+{
+  "name": "liri_bot",
+  "version": "1.0.0",
+  "description": "LIRI Bot Assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kinla/LIRI_Bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kinla/LIRI_Bot/issues"
+  },
+  "homepage": "https://github.com/Kinla/LIRI_Bot#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
