@@ -2,28 +2,26 @@ require("dotenv").config();
 
 var keys = require("./keys.js");
 
-var spotify = new Spotify(keys.spotify);
+//var spotify = new Spotify(keys.spotify);
 
-/* Coommands
-   * `concert-this`
+const axios = require('axios');
 
-   * `spotify-this-song`
-
-   * `movie-this`
-
-   * `do-what-it-says`
-
- */
 let command = process.argv[2];
 let input = process.argv[3];
 
 let concert = () => {
-    
-}
+    let bandsURL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
+    try {
+        return await axios.get(bandsURL)
+      } catch (error) {
+        console.error(error)
+      }}
 
+concert();
+/*
  switch (command) {
     case "concert-this":
-        
+        concert();
         break;
     case "spotify-this-song":
     
@@ -37,3 +35,4 @@ let concert = () => {
     default:
         break;
  }
+ */
