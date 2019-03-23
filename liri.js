@@ -7,17 +7,18 @@ var keys = require("./keys.js");
 const axios = require('axios');
 
 let command = process.argv[2];
-let input = process.argv[3];
+let input = process.argv[3].trim().split(" ").join("%20");
 
 let concert = () => {
     let bandsURL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
-    try {
-        return await axios.get(bandsURL)
-      } catch (error) {
-        console.error(error)
-      }}
-
+    axios
+        .get(bandsURL)
+        .then(function(response){
+            console.log(response)
+        })
+    };
 concert();
+
 /*
  switch (command) {
     case "concert-this":
