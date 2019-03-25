@@ -1,64 +1,24 @@
 require("dotenv").config();
 
 const keys = require("./keys.js");
-
-//var spotify = new Spotify(keys.spotify);
-
 const axios = require('axios');
 const moment = require('moment');
 const Spotify = require("node-spotify-api");
+const fs = require("fs");
 
-let command = process.argv[2];
+const command = process.argv[2];
+const value = process.argv.splice(3).join("+");
 
-let concert = () => {
-    let input = "";
-    for (let i = 3; i < process.argv.length; i++){
-        if (i < process.argv.length - 1){
-            switch (process.argv[i]) {
-                case "/":
-                    input+="%252F%20"
-                    break;            
-                case "?":
-                    input+="%253F%20"
-                    break;            
-                case "*":
-                    input+="%252A%20"
-                    break;            
-                case '"':
-                    input+="%27C%20"
-                    break;            
-                default:
-                    input+=process.argv[i]+ "%20"
-                    break;
-            }
-        } else {
-            switch (process.argv[i]) {
-                case "/":
-                    input+="%252F"
-                    break;            
-                case "?":
-                    input+="%253F"
-                    break;            
-                case "*":
-                    input+="%252A"
-                    break;            
-                case '"':
-                    input+="%27C"
-                    break;            
-                default:
-                    input+=process.argv[i]
-                    break;
-            }
-        }
-    }
-    
+const concert = (title) => {
+    let input = title.replace(/ |\+/g, "%20").replace(/"/g, "")
+
     let bandsURL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
 
     axios
         .get(bandsURL)
         .then(function(response){
-            if (response.data.length === 0){
-                console.log("Sorry, " + input + " has no upcoming show.")
+            if (!response.data.length){
+                console.log("Sorry, this artist has no upcoming show.")
             } else {
                 let show = response.data
                 for (let i = 0; i < response.data.length; i++){
@@ -71,25 +31,22 @@ let concert = () => {
                     console.log("Venue: " + venue);
                     console.log("Location: " + location);
                     console.log("Date: " + date);
-
-
                 }
-
             }
         })
+        .catch(function(err){
+            console.log("Oops! " + err)
+        })  
 };
 
 
-let song = () => {
-    let spotify = new Spotify({
-        id: "b32945b228cd448691a70ebe2eae3b42",
-        secret: "2f8d75a4d3f64925be3ccbdb59c95b29"
-    });
+const song = (title) => {
+    let spotify = new Spotify(keys.spotify);
 
-    let input = process.argv.slice(3).join("+")
+    let input = title.replace(/ /g, '+').replace(/"/g, "")
 
     spotify
-        .search({ type: 'track', query: input })
+        .search({ type: 'track', query: input, limit: 5 })
         .then(function(response) {
             for (var i = 0; i < response.tracks.items.length; i++){
                 let artists = response.tracks.items[i].album.artists[0].name;
@@ -103,7 +60,7 @@ let song = () => {
                 console.log("Preview: " + preview);
                 console.log("Album: " + album);
             };
-            if (response.tracks.items.length === 0){
+            if (!response.tracks.items.length){
                 spotify
                 .request('https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE')
                 .then(function(response) {
@@ -119,29 +76,74 @@ let song = () => {
                     console.log("Song Title: " + name);
                     console.log("Preview: " + preview);
                     console.log("Album: " + album);
-                    })
-    
+                    })    
             }
-
         })
+        .catch(function(err){
+            console.log("Oops! " + err)
+        })  
     }
 
+const movie = (title) => {
+    let input = "";
+    let queryUrl = "";
 
+    if (!title){
+        queryUrl = "http://www.omdbapi.com/?t=Mr%2E+Nobody&y=&plot=short&apikey=trilogy";
+    } else {
+        input = title.replace(/ /g, '+').replace(/"/g, "")
+        queryUrl = "http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy"; 
+    }
 
+    axios
+        .get(queryUrl)
+        .then(function(response){
+            if (response.data.Response === "False"){
+                movie();
+            } else {
+                console.log("--------------------------------");            
+                console.log("Title: " + response.data.Title);
+                console.log("Year: " + response.data.Year);
+                console.log("IMBD Rating: " + response.data.Ratings[0].Value);
+                console.log("Tomatoes Rating: " + response.data.Ratings[1].Value);
+                console.log("Country: " + response.data.Country);
+                console.log("Language: " + response.data.Language);
+                console.log("Plot: " + response.data.Plot);
+                console.log("Actors: " + response.data.Actors);
+            }
+        })
+        .catch(function(err){            
+            console.log("Oops! " + err)
+        })  
+}
 
- switch (command) {
-    case "concert-this":
-        concert();
-        break;
-        case "spotify-this-song":
-        song();
-        break;
-    case "movie-this":
-    
-        break;
-    case "do-what-it-says":
-    
-        break;
-    default:
-        break;
- }
+const simon = () => {
+    fs.readFile("random.txt", "utf8", (err, data)=>{
+        if (err) throw err;
+        input = data.split(",")
+        controller(input[0],input[1])
+    })
+
+}
+
+const controller = (cmd,val) => {
+    switch (cmd) {
+       case "concert-this":
+           concert(val);
+           break;
+           case "spotify-this-song":
+           song(val);
+           break;
+       case "movie-this":
+           movie(val);
+           break;
+       case "do-what-it-says":
+           simon();
+           break;
+       default:
+           console.log("Did you forget something?")
+           break;
+    }
+}
+ 
+controller(command, value);
