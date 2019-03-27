@@ -26,7 +26,7 @@ const consoleLog = (res) => {
         console.log("---------------------------------")
         for (const key in element) {
                 const entry = element[key];
-                console.log(key + ": " + entry)
+                console.log(`${key}: ${entry}`)
         }                            
     })
 }
@@ -41,7 +41,7 @@ const concert = (title) => {
         .then(function(response){
             let results = [{"Command": "concert-this"}];
             if (!response.data.length){
-                const errMsg = {"Error": "Sorry, this artist has no upcoming show."}
+                const errMsg = {"Error": `Sorry, ${title.replace(/"/g,"")} has no upcoming show.`}
                 results.push(errMsg)
             } else {
                 let show = response.data
@@ -63,7 +63,7 @@ const concert = (title) => {
             consoleLog(results);                    
         })
         .catch(function(err){
-            console.log("Oops! " + err)
+            console.log(`Oops! ${err}`)
         })  
 }
 
@@ -115,7 +115,7 @@ const song = (title) => {
             consoleLog(results);                    
         })
         .catch(function(err){
-            console.log("Oops! " + err)
+            console.log(`Oops! ${err}`)
         })  
     }
 
@@ -136,9 +136,8 @@ const movie = (title) => {
             if (response.data.Response === "False"){
                 movie();
             } else {
-                let result = [{
-                    "Command": "movie-this",
-                    "Title": response.data.Title,
+                let result = [{"Command": "movie-this"},                    
+                    {"Title": response.data.Title,
                     "Year": response.data.Year,
                     "IMBD_Rating": response.data.Ratings[0].Value,
                     "Tomatoes_Rating": response.data.Ratings[1].Value,
@@ -152,7 +151,7 @@ const movie = (title) => {
             }
         })
         .catch(function(err){            
-            console.log("Oops! " + err)
+            console.log(`Oops! ${err}`)
         })  
 }
 
@@ -170,6 +169,25 @@ const simon = () => {
 
 }
 
+const showLog = () => {
+    fs.readFile("log.txt", "utf8", (err, data) => {
+        if (err) {console.log("Sorry, the log is empty.")}
+        else{
+            const dataLog = JSON.parse(`[${data}]`);
+            dataLog.forEach(entry => {
+                entry.forEach(obj => {
+                    console.log("---------------------------")
+                    for (const key in obj) {
+                        if (obj.hasOwnProperty(key)) {
+                            console.log(`${key}: ${obj[key]}`);            
+                        }
+                    }    
+                })
+            })
+        }
+    })
+}
+
 const controller = (cmd,val) => {
     switch (cmd) {
        case "concert-this":
@@ -184,6 +202,9 @@ const controller = (cmd,val) => {
        case "do-what-it-says":
            simon();
            break;
+       case "show-log":
+           showLog();
+           break; 
        default:
            console.log("Did you forget something?")
            break;
