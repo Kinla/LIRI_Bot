@@ -57,7 +57,6 @@ const concert = (title) => {
                     }
                     results.push(result)
                 }
-
             }
             writeLog(results);             
             consoleLog(results);                    
@@ -107,6 +106,7 @@ const song = (title) => {
                         "Preview": preview,
                         "Album": album
                     }]
+
                     writeLog(result);             
                     consoleLog(result);                
                 })    
@@ -164,9 +164,7 @@ const simon = () => {
 
     let result = [{"Command": "do-what-it-says"}];
     writeLog(result);             
-    consoleLog(result);    
-
-
+    consoleLog(result);  
 }
 
 const showLog = () => {
