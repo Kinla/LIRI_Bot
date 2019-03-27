@@ -30,6 +30,7 @@ User would use the key phrase `concert-this` followed by the artist's name to fi
 If there is no future concert information availalbe. It will log "
    * `concert-this` - Find future concert by artist(s) query
 
+![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/Recordings/GIF01.gif)
 
 
 
