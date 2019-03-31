@@ -208,5 +208,18 @@ const controller = (cmd,val) => {
            break;
     }
 }
- 
+
+const title = () =>{
+    console.log("\n\n\n\n\n\n\n\n\n\n\n    LIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOT")
+    console.log("    LI                                                           OT")
+    console.log("    LI  B       OTLIR  OTLIR   TLIRI     RIBOT    BOTL   BOTLI   OT")
+    console.log("    LI  B         L    O    I    I       R    L  I    I    T     OT")
+    console.log("    LI  B         L    OTLIR     I       RIBOTL  I    I    T     OT")
+    console.log("    LI  B         L    O  IR     I       R    L  I    I    T     OT")
+    console.log("    LI  BOTLIR  OTLIR  O    I  TLIRI     RIBOT    BOTL     T     OT")
+    console.log("    LI                                                           OT")
+    console.log("    LIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOT\n\n\n\n\n\n\n\n\n\n\n")
+}
+
 controller(command, value);
+ 
