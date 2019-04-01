@@ -28,25 +28,25 @@ This LIRI Bot is a CLI app that takes in parameters and returns data in terminal
    * `concert-this`
       * Working example: concert-this Drake
       * Fail: concert-this adele
-   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/Recordings/concert.gif)
+   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/assets/concert.gif)
 
    * `spotify-this-song`
       * Working example: spotify-this-song hello (max result: 5)
       * Fail: spotify-this-song dsafjl
-   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/Recordings/song.gif)
+   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/assets/song.gif)
 
    * `movie-this`
       * Working example: movie-this the matrix
       * Fail: movie-this
-   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/Recordings/movie.gif)
+   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/assets/movie.gif)
 
    * `do-what-it-says`
       * Working example: do-what-it-says
-   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/Recordings/simon.gif)
+   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/assets/simon.gif)
 
    * `show-log`
       * Working example: show-log
-   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/Recordings/log.gif)
+   ![how-this-works](https://github.com/Kinla/LIRI_Bot/blob/master/assets/log.gif)
 
 - - -
 
