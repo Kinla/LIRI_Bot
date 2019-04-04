@@ -9,6 +9,7 @@ const fs = require("fs");
 const command = process.argv[2];
 const value = process.argv.splice(3).join("+");
 
+//code for writing search result to log.txt
 const writeLog = (res) => {
     if (fs.existsSync("log.txt")) {
         fs.appendFile("log.txt", "," + JSON.stringify(res), (err) =>{
@@ -21,6 +22,7 @@ const writeLog = (res) => {
     }
 }
 
+//code for console logging results
 const consoleLog = (res) => {
     res.forEach(element => {
         console.log("---------------------------------")
@@ -31,6 +33,7 @@ const consoleLog = (res) => {
     })
 }
 
+//querying future concert by artist
 const concert = (title) => {
     let input = title.replace(/ |\+/g, "%20").replace(/"/g, "")
 
@@ -66,7 +69,7 @@ const concert = (title) => {
         })  
 }
 
-
+//querying song
 const song = (title) => {
     let spotify = new Spotify(keys.spotify);
 
@@ -119,6 +122,7 @@ const song = (title) => {
         })  
     }
 
+//querying movie
 const movie = (title) => {
     let input = "";
     let queryUrl = "";
@@ -155,6 +159,7 @@ const movie = (title) => {
         })  
 }
 
+//do what random.txt says
 const simon = () => {
     fs.readFile("random.txt", "utf8", (err, data)=>{
         if (err) throw err;
@@ -167,6 +172,7 @@ const simon = () => {
     consoleLog(result);  
 }
 
+//show log function
 const showLog = () => {
     fs.readFile("log.txt", "utf8", (err, data) => {
         if (err) {console.log("Sorry, the log is empty.")}
@@ -186,6 +192,7 @@ const showLog = () => {
     })
 }
 
+//liri bot controller
 const controller = (cmd,val) => {
     switch (cmd) {
        case "concert-this":
@@ -209,6 +216,7 @@ const controller = (cmd,val) => {
     }
 }
 
+//Create this to print in terminal for a picture to use in portfolio
 const title = () =>{
     console.log("\n\n\n\n\n\n\n\n\n\n\n    LIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOT")
     console.log("    LI                                                           OT")
@@ -221,5 +229,6 @@ const title = () =>{
     console.log("    LIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOTLIRIBOT\n\n\n\n\n\n\n\n\n\n\n")
 }
 
+//run liri
 controller(command, value);
  
